@@ -1,7 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import Driver from '../db/models/driver.entity';
 import RepoService from '../repo.service';
-import DriverInput from './input/driver.input';
 
 @Resolver()
 class DriverResolver {
@@ -17,8 +16,8 @@ class DriverResolver {
   }
 
   @Mutation(() => Driver)
-  public async createDriver(@Args('data') input: DriverInput): Promise<Driver> {
-    const driver = this.repoService.driverRepo.create({ name: input.name });
+  public async createDriver(@Args('name') name: string): Promise<Driver> {
+    const driver = this.repoService.driverRepo.create({ name: name });
     return this.repoService.driverRepo.save(driver);
   }
 }
